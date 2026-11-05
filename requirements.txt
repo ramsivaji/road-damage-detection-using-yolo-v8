@@ -1,0 +1,21 @@
+# Core application
+streamlit>=1.57,<2
+
+# Dataset download and progress
+requests>=2.32,<3
+tqdm>=4.66,<5
+
+# Computer vision and data preparation
+opencv-python>=4.10,<5
+numpy>=1.26,<3
+pandas>=2.2,<3
+Pillow>=10.4,<12
+matplotlib>=3.9,<4
+
+# Deep learning and YOLOv8 training
+torch>=2.2,<3
+torchvision>=0.17,<1
+ultralytics>=8.3,<9
+
+# Optional annotation integrations are intentionally not installed as Python
+# dependencies. CVAT and LabelImg are external tools described in README.md.
