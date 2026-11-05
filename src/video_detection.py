@@ -2,7 +2,10 @@
 
 from pathlib import Path
 import cv2
+import sys
 from ultralytics import YOLO
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import BEST_MODEL_PATH, VIDEO_OUTPUTS_DIR
 

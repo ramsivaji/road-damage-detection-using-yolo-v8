@@ -4,6 +4,9 @@ from pathlib import Path
 import argparse
 import random
 import shutil
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import (
     ANNOTATIONS_DIR,
@@ -15,7 +18,7 @@ from config import (
     VAL_SPLIT,
 )
 from config import ensure_project_directories
-from utils import iter_source_images, write_data_yaml
+from src.utils import iter_source_images, write_data_yaml
 
 
 def main() -> None:

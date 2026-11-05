@@ -3,10 +3,13 @@
 from pathlib import Path
 import argparse
 import shutil
+import sys
 import zipfile
 
 import requests
 from tqdm import tqdm
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import DOWNLOADS_DIR, RDD2022_DOWNLOAD_URL, RAW_ANNOTATIONS_DIR, RAW_IMAGES_DIR
 from config import ensure_project_directories
@@ -45,7 +48,9 @@ def main() -> None:
     ensure_project_directories()
     archive = DOWNLOADS_DIR / "RDD2022.zip"
     extracted = DOWNLOADS_DIR / "extracted"
-    if not archive.exists():
+    if not archive.exists() or not zipfile.is_zipfile(archive):
+        if archive.exists():
+            archive.unlink()
         print(f"Downloading RDD2022 from {args.url}")
         download_file(args.url, archive)
     else:

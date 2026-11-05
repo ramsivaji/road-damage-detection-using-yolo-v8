@@ -2,11 +2,14 @@
 
 from pathlib import Path
 import argparse
+import sys
 import xml.etree.ElementTree as ET
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import ANNOTATIONS_DIR, CLASS_IDS, RAW_ANNOTATIONS_DIR, RAW_IMAGES_DIR
 from config import ensure_project_directories
-from utils import find_annotation, find_image
+from src.utils import find_image
 
 
 def convert_box(left: float, top: float, right: float, bottom: float, width: float, height: float) -> tuple[float, float, float, float]:

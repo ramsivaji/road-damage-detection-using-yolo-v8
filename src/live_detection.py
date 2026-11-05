@@ -2,7 +2,11 @@
 
 import time
 import cv2
+from pathlib import Path
+import sys
 from ultralytics import YOLO
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import BEST_MODEL_PATH, DETECTION_OUTPUTS_DIR
 

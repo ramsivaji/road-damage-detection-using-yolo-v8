@@ -2,6 +2,9 @@
 
 from pathlib import Path
 from collections import Counter
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import CLASS_IDS, PREPARED_IMAGES_DIR, PREPARED_LABELS_DIR
 

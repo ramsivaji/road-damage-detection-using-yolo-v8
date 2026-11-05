@@ -1,8 +1,11 @@
 """Run detection on an uploaded image using the project-produced model."""
 
 from pathlib import Path
+import sys
 from PIL import Image
 from ultralytics import YOLO
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import BEST_MODEL_PATH, DETECTION_OUTPUTS_DIR
 
