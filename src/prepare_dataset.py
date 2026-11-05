@@ -9,6 +9,7 @@ from config import (
     ANNOTATIONS_DIR,
     PREPARED_IMAGES_DIR,
     PREPARED_LABELS_DIR,
+    RAW_IMAGES_DIR,
     TEST_SPLIT,
     TRAIN_SPLIT,
     VAL_SPLIT,
@@ -24,7 +25,7 @@ def main() -> None:
     ensure_project_directories()
     pairs = []
     for image in iter_source_images():
-        relative = image.relative_to(Path("dataset/raw/images"))
+        relative = image.relative_to(RAW_IMAGES_DIR)
         label = ANNOTATIONS_DIR / relative.with_suffix(".txt")
         if label.exists():
             pairs.append((image, label, relative))

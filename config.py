@@ -39,8 +39,7 @@ CLASS_NAMES = {
 
 RDD2022_REPOSITORY_URL = "https://github.com/sekilab/RoadDamageDetector"
 RDD2022_DOWNLOAD_URL = (
-    "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/"
-    "CRDDC2022/RDD2022/RDD2022.zip"
+    "https://ndownloader.figshare.com/files/38030910"
 )
 DEFAULT_COUNTRY = "India"
 
@@ -57,6 +56,7 @@ DEFAULT_EPOCHS = 100
 DEFAULT_BATCH_SIZE = 8
 DEFAULT_IMAGE_SIZE = 640
 DEFAULT_LEARNING_RATE = 0.01
+MODEL_PATH = BEST_MODEL_PATH
 
 
 def ensure_project_directories() -> None:

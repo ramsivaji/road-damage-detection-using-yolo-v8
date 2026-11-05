@@ -13,10 +13,11 @@ from config import ensure_project_directories
 
 
 def download_file(url: str, destination: Path) -> None:
+    partial = destination.with_suffix(destination.suffix + ".part")
     with requests.get(url, stream=True, timeout=(30, 120)) as response:
         response.raise_for_status()
         total = int(response.headers.get("content-length", 0))
-        with destination.open("wb") as output:
+        with partial.open("wb") as output:
             with tqdm(
                 total=total,
                 unit="B",
@@ -27,6 +28,7 @@ def download_file(url: str, destination: Path) -> None:
                     if chunk:
                         output.write(chunk)
                         progress.update(len(chunk))
+    partial.replace(destination)
 
 
 def extract_archive(archive: Path, destination: Path) -> None:
@@ -37,6 +39,7 @@ def extract_archive(archive: Path, destination: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default=RDD2022_DOWNLOAD_URL)
+    parser.add_argument("--country", default="India", help="Country folder to copy, or all")
     args = parser.parse_args()
 
     ensure_project_directories()
@@ -59,6 +62,11 @@ def main() -> None:
         if not source.is_file():
             continue
         suffix = source.suffix.lower()
+        country_match = args.country.lower() == "all" or any(
+            args.country.lower() in part.lower() for part in source.parts
+        )
+        if not country_match:
+            continue
         if suffix in {".jpg", ".jpeg", ".png", ".bmp"}:
             target = RAW_IMAGES_DIR / source.relative_to(extracted)
             target.parent.mkdir(parents=True, exist_ok=True)

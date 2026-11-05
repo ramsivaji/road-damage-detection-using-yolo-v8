@@ -13,9 +13,8 @@ Pillow>=10.4,<12
 matplotlib>=3.9,<4
 
 # Deep learning and YOLOv8 training
-torch>=2.2,<3
-torchvision>=0.17,<1
+# CUDA 12.8 wheels are compatible with the installed MX550 driver (CUDA 13.1).
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
 ultralytics>=8.3,<9
-
-# Optional annotation integrations are intentionally not installed as Python
-# dependencies. CVAT and LabelImg are external tools described in README.md.

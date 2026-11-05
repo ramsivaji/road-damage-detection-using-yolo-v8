@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse
 import xml.etree.ElementTree as ET
 
-from config import ANNOTATIONS_DIR, CLASS_IDS
+from config import ANNOTATIONS_DIR, CLASS_IDS, RAW_ANNOTATIONS_DIR, RAW_IMAGES_DIR
 from config import ensure_project_directories
 from utils import find_annotation, find_image
 
@@ -57,7 +57,7 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=0)
     args = parser.parse_args()
     ensure_project_directories()
-    xml_files = list(Path("dataset/raw/annotations").rglob("*.xml"))
+    xml_files = list(RAW_ANNOTATIONS_DIR.rglob("*.xml"))
     converted = objects = 0
     for xml_path in xml_files[: args.limit or None]:
         image = find_image(xml_path.stem + ".jpg")
@@ -65,7 +65,7 @@ def main() -> None:
             image = find_image(xml_path.stem + ".png")
         if image is None:
             continue
-        relative = image.relative_to(Path("dataset/raw/images"))
+        relative = image.relative_to(RAW_IMAGES_DIR)
         output = ANNOTATIONS_DIR / relative.with_suffix(".txt")
         objects += convert_annotation(xml_path, output)
         converted += 1

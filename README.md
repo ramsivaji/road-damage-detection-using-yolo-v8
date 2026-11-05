@@ -37,7 +37,7 @@ scattering configuration through the application.
 From PowerShell in this project directory:
 
 ```powershell
-py -3.11 -m venv .venv
+py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
@@ -50,9 +50,9 @@ If PowerShell blocks activation for the current user, run:
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
-PyTorch installation may need a platform-specific command for a CUDA-enabled
-machine. Use the official PyTorch installation selector, then install the rest
-of `requirements.txt`.
+The requirements file pins CUDA 12.8 PyTorch wheels. They are compatible with
+the NVIDIA driver runtime reported by `nvidia-smi`; PyTorch uses its bundled
+CUDA runtime and does not require the CUDA toolkit to be installed separately.
 
 ## Project layout
 
@@ -96,3 +96,21 @@ After confirming this setup works locally, Phase 2 will add automatic RDD2022
 download with country selection and progress reporting. Extraction, XML
 conversion, dataset preparation, training, evaluation, and detection will
 remain separate phases.
+
+## Run the complete workflow
+
+```powershell
+python -m src.download_dataset --country India
+python src\convert_annotations.py
+python src\prepare_dataset.py
+python src\validate_dataset.py
+python src\train.py --mode scratch --epochs 100 --batch 2 --imgsz 640 --device 0
+python src\evaluate.py --device 0
+python -m streamlit run app.py
+```
+
+The official RDD2022 archive is approximately 13 GB. The download script keeps
+the original archive and extracted source under `dataset\downloads\`, then
+copies only the selected country into `dataset\raw\`. Test images in RDD2022 do
+not have XML labels, so only verified train image/XML pairs are included in the
+YOLO training splits.
